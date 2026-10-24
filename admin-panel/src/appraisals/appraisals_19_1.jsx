@@ -1,0 +1,27 @@
+// Khantil System - Admin Panel :: Appraisals management (PR 19, step 1)
+import React, { useState } from 'react';
+
+export default function AdminAppraisals191() {
+  const [form, setForm] = useState({ name: '', status: 'active' });
+
+  const save = async () => {
+    await fetch('/api/appraisals', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+    setForm({ name: '', status: 'active' });
+  };
+
+  return (
+    <div className="admin-card">
+      <h3>Manage Appraisals</h3>
+      <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Name" />
+      <select value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+      <button onClick={save}>Save</button>
+    </div>
+  );
+}
